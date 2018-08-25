@@ -1,0 +1,12 @@
+/Users/mayankan/RiderProjects/SimpleAssignmentProblem/SimpleAssignmentProblem/obj/Debug/SimpleAssignmentProblem.csprojResolveAssemblyReference.cache
+/Users/mayankan/RiderProjects/SimpleAssignmentProblem/SimpleAssignmentProblem/obj/Debug/SimpleAssignmentProblem.csproj.CoreCompileInputs.cache
+/Users/mayankan/RiderProjects/SimpleAssignmentProblem/SimpleAssignmentProblem/bin/Debug/SimpleAssignmentProblem.exe
+/Users/mayankan/RiderProjects/SimpleAssignmentProblem/SimpleAssignmentProblem/bin/Debug/SimpleAssignmentProblem.pdb
+/Users/mayankan/RiderProjects/SimpleAssignmentProblem/SimpleAssignmentProblem/obj/Debug/SimpleAssignmentProblem.exe
+/Users/mayankan/RiderProjects/SimpleAssignmentProblem/SimpleAssignmentProblem/obj/Debug/SimpleAssignmentProblem.pdb
+/Users/mayankan/RiderProjects/ACE/SimpleAssignmentProblem/bin/Debug/SimpleAssignmentProblem.exe
+/Users/mayankan/RiderProjects/ACE/SimpleAssignmentProblem/bin/Debug/SimpleAssignmentProblem.pdb
+/Users/mayankan/RiderProjects/ACE/SimpleAssignmentProblem/obj/Debug/SimpleAssignmentProblem.csprojResolveAssemblyReference.cache
+/Users/mayankan/RiderProjects/ACE/SimpleAssignmentProblem/obj/Debug/SimpleAssignmentProblem.csproj.CoreCompileInputs.cache
+/Users/mayankan/RiderProjects/ACE/SimpleAssignmentProblem/obj/Debug/SimpleAssignmentProblem.exe
+/Users/mayankan/RiderProjects/ACE/SimpleAssignmentProblem/obj/Debug/SimpleAssignmentProblem.pdb
