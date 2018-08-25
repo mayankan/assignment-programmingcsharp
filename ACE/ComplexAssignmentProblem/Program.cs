@@ -26,6 +26,7 @@ namespace ComplexAssignmentProblem
         {
             int noOfteachers, noOfSubjects, noOfClasses, subjectsInClass = 0;
             string teacherName = "", className = "";
+            bool flag5 = false;
             Dictionary<string, List<string>> teacherDictionary = new Dictionary<string, List<string>>();
             Dictionary<int, List<ClassSchedule>> weekClassDictionary = new Dictionary<int, List<ClassSchedule>>();
             Dictionary<int, List<ClassSchedule>> outputDictionary = new Dictionary<int, List<ClassSchedule>>();
@@ -54,57 +55,70 @@ namespace ComplexAssignmentProblem
             {
                 Console.Write("Enter Class ");
                 className = Console.ReadLine();
-                for (int i = 0; i < 5; i++)
+                do
                 {
-                    do
+                    Dictionary<int, List<ClassSchedule>> weekClasstestDictionary = new Dictionary<int, List<ClassSchedule>>();
+                    for (int i = 0; i < 5; i++)
                     {
-                        Console.Write("Enter number of lectures taught in this class  on {0} ",
-                            Enum.GetName(typeof(WeekDays), i));
-                        subjectsInClass = Convert.ToInt32(Console.ReadLine());
-                    } while (subjectsInClass < 4);
-
-                    bool flag = false;
-                    List<ClassSchedule> classSchedule = new List<ClassSchedule>();
-                    do
-                    {
-                        for (int k = 0; k < subjectsInClass; k++)
+                        do
                         {
-                            Console.Write("Enter the lecture taught in the class ");
-                            classSchedule.Add(new ClassSchedule()
+                            Console.Write("Enter number of lectures taught in this class  on {0} ",
+                                Enum.GetName(typeof(WeekDays), i));
+                            subjectsInClass = Convert.ToInt32(Console.ReadLine());
+                        } while (subjectsInClass < 4);
+
+                        bool flag4 = false;
+                        List<ClassSchedule> classSchedule = new List<ClassSchedule>();
+                        do
+                        {
+                            for (int k = 0; k < subjectsInClass; k++)
                             {
-                                className = className,
-                                classValue = Console.ReadLine()
-                            });
-                        }
+                                Console.Write("Enter the lecture taught in the class ");
+                                classSchedule.Add(new ClassSchedule()
+                                {
+                                    className = className,
+                                    classValue = Console.ReadLine()
+                                });
+                            }
 
-                        if ((classSchedule.GroupBy(x => x.classValue).Distinct().Count()) < 4)
-                            Console.WriteLine("Please enter atleast 4 unique subjects");
+                            if ((classSchedule.GroupBy(x => x.classValue).Distinct().Count()) < 4)
+                                Console.WriteLine("Please enter atleast 4 unique subjects");
+                            else
+                                flag4 = true;
+                        } while (!flag4);
+                        weekClasstestDictionary.Add(i, classSchedule);
+                    }
+                    List<string> classSubjects =
+                        weekClasstestDictionary.SelectMany(x => x.Value).Where(x => x.className==className).Select(x=>x.classValue).ToList();
+
+                    /*foreach (ClassSchedule x in classSchedules)
+                    {
+                    subjectsCol.Add(x.classSubject);
+                    }*/
+                    List<string> subjectsFromInput = classSubjects.GroupBy(x => x).Select(x => x.Key).ToList();
+                    List<string> selectedSubjects =
+                        classSubjects.GroupBy(x => x).Where(x => x.Count() != 5).Select(x => x.Key).ToList();
+                    List<string> subjectsInTeacher = teacherDictionary.SelectMany(x => x.Value).Distinct().ToList();
+                    foreach (string x in subjectsInTeacher)
+                    {
+                        if (subjectsFromInput.Contains(x))
+                            continue;
                         else
-                            flag = true;
-                    } while (!flag);
-                    weekClassDictionary.Add(i, classSchedule);
-                }
+                            selectedSubjects.Add(x);
+                    }
+
+                    if (selectedSubjects.Count > 0)
+                        Console.WriteLine("Each subject should have 5 lectures in a week.");
+                    else
+                    {
+                        flag5 = true;
+                        foreach (var x in weekClasstestDictionary)
+                        {
+                            weekClassDictionary.Add(x.Key,x.Value);
+                        }
+                    }
+                } while (!flag5);
             }
-
-            List<string> classSubjects =
-                weekClassDictionary.SelectMany(x => x.Value).Select(x => x.classValue).ToList();
-
-            /*foreach (ClassSchedule x in classSchedules)
-            {
-                subjectsCol.Add(x.classSubject);
-            }*/
-
-            List<string> selectedSubjects =
-                classSubjects.GroupBy(x => x).Where(x => x.Count() != 5).Select(x => x.Key).ToList();
-            List<string> subjectsInTeacher = teacherDictionary.SelectMany(x => x.Value).Distinct().ToList();
-            foreach (string x in subjectsInTeacher)
-            {
-                if (!selectedSubjects.Contains(x))
-                    selectedSubjects.Add(x);
-            }
-
-            if (selectedSubjects.Count > 0)
-                Console.WriteLine("Each subject should have 5 lectures in a week.");
             int count = 2;
             for (int i = 0; i < 5; i++)
             {
