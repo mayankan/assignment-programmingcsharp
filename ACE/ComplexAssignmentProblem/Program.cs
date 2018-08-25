@@ -63,12 +63,11 @@ namespace ComplexAssignmentProblem
                         subjectsInClass = Convert.ToInt32(Console.ReadLine());
                     } while (subjectsInClass < 4);
 
+                    bool flag = false;
                     List<ClassSchedule> classSchedule = new List<ClassSchedule>();
-                    for (int k = 0; k < subjectsInClass; k++)
+                    do
                     {
-                        if ((classSchedule.GroupBy(x => x.classValue).Distinct().Count()) < 4)
-                            Console.WriteLine("Please enter atleast 4 unique subjects");
-                        else
+                        for (int k = 0; k < subjectsInClass; k++)
                         {
                             Console.Write("Enter the lecture taught in the class ");
                             classSchedule.Add(new ClassSchedule()
@@ -77,8 +76,12 @@ namespace ComplexAssignmentProblem
                                 classValue = Console.ReadLine()
                             });
                         }
-                    }
 
+                        if ((classSchedule.GroupBy(x => x.classValue).Distinct().Count()) < 4)
+                            Console.WriteLine("Please enter atleast 4 unique subjects");
+                        else
+                            flag = true;
+                    } while (!flag);
                     weekClassDictionary.Add(i, classSchedule);
                 }
             }
@@ -101,7 +104,7 @@ namespace ComplexAssignmentProblem
             }
 
             if (selectedSubjects.Count > 0)
-                Console.WriteLine(selectedSubjects.ToString());
+                Console.WriteLine("Each subject should have 5 lectures in a week.");
             int count = 2;
             for (int i = 0; i < 5; i++)
             {
@@ -152,8 +155,7 @@ namespace ComplexAssignmentProblem
                     }
                 }
             }
-
-            List<string> classesOupList = outputDictionary.SelectMany(x => x.Value).Select(x => x.className).ToList();
+            List<string> classesOupList = outputDictionary.SelectMany(x => x.Value).Select(x => x.className).Distinct().ToList();
             foreach (string a in classesOupList)
             {
                 Console.WriteLine("Timetable for Class {0} :",a);
