@@ -68,7 +68,7 @@ namespace SimpleAssignmentProblem
                 //Adds each class's name and List of lectures taught in that class into classDictionary.
                 classDictionary.Add(className,classSchedule);
             }
-            //count variable define to check whether teacher is already alloted to 2 classes.
+            //count variable is defined to check whether teacher is already alloted to 2 classes.
             int count = 2;
             //Looping for each value in classDictionary
             foreach (var x in classDictionary)
