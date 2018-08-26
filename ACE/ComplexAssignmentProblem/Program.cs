@@ -23,7 +23,6 @@ namespace ComplexAssignmentProblem
         }
         public static void Main(string[] args)
         {
-            
             //noOfteacher,noOfSubject,noOfClasses stores number of inputs for classes, subjects and teacher at the time of input from the user.
             //subjectsInClass stores number of subjects in one class at a time.
             int noOfteachers, noOfSubjects, noOfClasses, subjectsInClass = 0;
@@ -145,19 +144,24 @@ namespace ComplexAssignmentProblem
             }
             //count variable is defined to check whether teacher is already alloted to 2 classes.
             int count = 2;
-            //
+            //Looping for each day in week.
             for (int i = 0; i < 5; i++)
             {
+                //query1 stores values of class and list of lectures taught in class, for current day of the week.
                 var query1 = weekClassDictionary.Where(x => x.Key == i).SelectMany(x => x.Value);
-                List<string> classes = weekClassDictionary.Where(x => x.Key == i).SelectMany(x => x.Value)
-                    .Select(x => x.className).Distinct()
-                    .ToList();
+                //classes stores unique class names from query1 which stores values for current day of the week.
+                List<string> classes = query1.Select(x => x.className).Distinct().ToList();
+                //Looping for each value in classes which stores unique class names for current day of week.
                 foreach (string y in classes)
                 {
+                    //subjectsFetch stores 
                     List<string> subjectsFetch =
                         query1.Where(x => x.className == y).Select(x => x.classValue).ToList();
+                    //teacherReplacedBySubjects stores list of teachers replaced by subjects/lectures for the current day of the week.
                     List<ClassSchedule> teachersReplacedBySubjects = new List<ClassSchedule>();
+                    //Checks if teacher is already allotted to 2 sections.
                     if (count == 0)
+                        //Adds blank value of the current subject to the list of teacherReplacedByStudents for the current lecture/subject.
                         teachersReplacedBySubjects.Add(new ClassSchedule()
                         {
                             className = y,
@@ -165,6 +169,7 @@ namespace ComplexAssignmentProblem
                         });
                     else
                     {
+                        //Looping for each sub
                         foreach (string z in subjectsFetch)
                         {
                             string teacherFetched = (from a in teacherDictionary where a.Value.Contains(z) select a.Key)
