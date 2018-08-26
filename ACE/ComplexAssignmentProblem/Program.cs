@@ -77,7 +77,7 @@ namespace ComplexAssignmentProblem
                     {
                         do
                         {
-                            //Taking input for number of lectures taught in that class.
+                            //Taking input for number of lectures taught in that class on current day of the week with the help of enum.
                             Console.Write("Enter number of lectures taught in this class  on {0} ",
                                 Enum.GetName(typeof(WeekDays), i));
                             subjectsInClass = Convert.ToInt32(Console.ReadLine());
@@ -154,7 +154,7 @@ namespace ComplexAssignmentProblem
                 //Looping for each value in classes which stores unique class names for current day of week.
                 foreach (string y in classes)
                 {
-                    //subjectsFetch stores 
+                    //subjectsFetch stores List of subjects for current class in current day of the week.
                     List<string> subjectsFetch =
                         query1.Where(x => x.className == y).Select(x => x.classValue).ToList();
                     //teacherReplacedBySubjects stores list of teachers replaced by subjects/lectures for the current day of the week.
@@ -169,25 +169,30 @@ namespace ComplexAssignmentProblem
                         });
                     else
                     {
-                        //Looping for each sub
+                        //Looping for each subject in subjectsFetch from current class in current day of the week.
                         foreach (string z in subjectsFetch)
                         {
+                            //teacherFetched stores teacher replacement for the current subject in subjectsFetched.
                             string teacherFetched = (from a in teacherDictionary where a.Value.Contains(z) select a.Key)
                                 .FirstOrDefault();
+                            //Checks if current teacher is already added in the lecture/subject to teacher replacement list.
                             if (teachersReplacedBySubjects.Select(x => x.classValue).Contains(teacherFetched))
                                 continue;
                             else if (query1.Select(b => b.classValue).Contains(teacherFetched))
                             {
+                                //Adds teacher as value and class name to the teacher replacement list for the current class
                                 teachersReplacedBySubjects.Add(
                                     new ClassSchedule()
                                     {
                                         className = y,
                                         classValue = teacherFetched
                                     });
+                                //Deducts one from the counter which checks teacher has already been added in current class.
                                 count--;
                             }
                             else
                             {
+                                //Adds teacher as value and class name to the teacher replacement list for the current class
                                 teachersReplacedBySubjects.Add(
                                     new ClassSchedule()
                                     {
@@ -196,29 +201,38 @@ namespace ComplexAssignmentProblem
                                     });
                             }
                         }
+                        //Adds List of teacher replacements for each lectures with class names & day of the week to the outputDictionary which stores output values showing time-table for the current class.
                         outputDictionary.Add(i, teachersReplacedBySubjects);
                     }
                 }
             }
+            //classOupList stores unique values of classes in the outputDictionary which stores output values.
             List<string> classesOupList = outputDictionary.SelectMany(x => x.Value).Select(x => x.className).Distinct().ToList();
+            //Looping for each class in the classesOupList which stores output list.
             foreach (string a in classesOupList)
             {
                 Console.WriteLine("Timetable for Class {0} :",a);
+                //Looping for each day in week.
                 for (int i = 0; i < 5; i++)
                 {
+                    //Prints value of day of week with the use of enum.
                     Console.Write(Enum.GetName(typeof(WeekDays), i)+" : ");
+                    //outputList stores List of teacher having lectures in the current class.
                     List<string> outputList = outputDictionary.Where(u => u.Key == i).SelectMany(x => x.Value)
                         .Where(x => x.className == a).Select(x => x.classValue).ToList();
+                    //Looping for each teacher lecture in the outputList
                     foreach (string b in outputList)
                     {
+                        //checks if iteration is last
                         if (b != outputList.Last())
+                            //prints with comma to separate multiple values for the same day in the output.
                             Console.Write(" " + b + ", ");
                         else
+                            //prints without comma and ends the line to separate different values for different days in the output.
                             Console.WriteLine(" " + b);
                     }
                 }
             }
-            
         }
     }
 }
