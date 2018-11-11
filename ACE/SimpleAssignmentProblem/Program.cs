@@ -103,7 +103,7 @@ namespace SimpleAssignmentProblem
                         }
                         else
                         {
-                            /Adds teacherFetched correspoding to subject taught in that class
+                            //Adds teacherFetched correspoding to subject taught in that class
                             teachersReplacedBySubjects.Add(
                                 teacherFetched);
                         }
